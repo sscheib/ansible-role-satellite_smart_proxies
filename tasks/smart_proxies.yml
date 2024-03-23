@@ -1,0 +1,19 @@
+---
+- name: 'smart_proxies | Create/Update/Delete Smart Proxy'
+  redhat.satellite.smart_proxy:
+    name: '{{ __t_smart_proxy.name }}'
+    url: '{{ __t_smart_proxy.url }}'
+    username: '{{ _satellite_username }}'
+    password: '{{ _satellite_password }}'
+    server_url: '{{ _satellite_server_url }}'
+    validate_certs: '{{ _satellite_validate_certs }}'
+    download_policy: '{{ __t_smart_proxy.download_policy | default(omit) }}'
+    lifecycle_environments: '{{ __t_smart_proxy.lifecycle_environments | default(omit) }}'
+    locations: '{{ __t_smart_proxy.locations | default(omit) }}'
+    organizations: '{{ __t_smart_proxy.organizations | default(omit) }}'
+    state: '{{ __t_smart_proxy.state | default(omit) }}'
+  loop: '{{ _sat_smart_proxies }}'
+  loop_control:
+    loop_var: '__t_smart_proxy'
+    label: '{{ __t_smart_proxy.name }}'
+...
