@@ -92,18 +92,7 @@ matrix:
       - pyspelling.filters.context:
           context_visible_first: false
           delimiters:
-            # take into account '- name' lines
-            # fully qualified collection name
-            #
-            # example:
-            #
-            # - name: 'My task'
-            #
-            - open: '(?s)^(?:-\s+?name):\s[^>\|]'
-              content: '.+?'
-              close: '$'
-
-            # take into account YAML multiline names
+            # take into account YAML multiline name lines
             #
             # examples:
             #
@@ -114,13 +103,32 @@ matrix:
             #     Folded block style without newline trimming
             #
             # - name: |-
-            #     Literal block style with newline trimming
+            #     Literal block
+            #     style with
+            #     newline
+            #     trimming
             #
             # - name: |
-            #     Literal block style without newline trimming
+            #     Literal block style without
+            #     newline trimming
             #
-            - open: '(?m)^(?:-\s+?name):\s+?(?:>|\|)(?:-)?(\n)(\s+)[^\n].+\2'
-              content: '[^\n].+(\1\2[^\n]+){0,}'
+            # this matching works until the first fully qualified collection name, e.g.:
+            # - ansible.builtin.copy
+            # - satellite.redhat.locations
+            #
+            # or if block: or when: is encountered on the next line
+            - open: '(?m)^\s+?-\s+?name:\s+?(?:>|\|)?-?'
+              content: '\n\s*([\s\S]+?)(?=\s*(?:[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)+\.|block:|when:))'
+              close: '$'
+
+            # take into account '- name' lines
+            #
+            # example:
+            #
+            # - name: 'My task'
+            #
+            - open: '(?s)^(?:-\s+?name):\s[^>\|]'
+              content: '.+?'
               close: '$'
 
             # take into account any comments
