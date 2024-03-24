@@ -25,7 +25,7 @@
       "rangeStrategy": "bump"
     },
     {
-      "matchPackage": [
+      "matchPackageNames": [
         "redhat.satellite"
       ],
       "registryUrls": [
