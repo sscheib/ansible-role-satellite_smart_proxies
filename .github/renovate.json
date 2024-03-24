@@ -23,6 +23,14 @@
         "enabled": true
       },
       "rangeStrategy": "bump"
+    },
+    {
+      "matchPackage": [
+        "redhat.satellite"
+      ],
+      "registryUrls": [
+        "https://github.com/RedHatSatellite/satellite-ansible-collection.git"
+      ]
     }
   ]
 }
