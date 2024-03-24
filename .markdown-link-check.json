@@ -11,6 +11,10 @@
     {
       "___comment___": "ignoring SSHd ciphers",
       "pattern": "^mailto:.+@(openssh.com|libssh.org)$"
+    },
+    {
+      "___comment___": "mend.io *always* returns 202",
+      "pattern": "^https?://(?:www)?.mend.io/renovate"
     }
   ],
   "timeout": "20s",
